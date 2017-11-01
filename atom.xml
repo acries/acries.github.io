@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-11-01T13:46:47.000Z</updated>
+  <updated>2017-11-01T13:52:36.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://yoursite.com/2017/11/01/ThreadLocal%E5%8E%9F%E7%90%86/"/>
     <id>http://yoursite.com/2017/11/01/ThreadLocal原理/</id>
     <published>2017-11-01T06:08:33.000Z</published>
-    <updated>2017-11-01T13:46:47.000Z</updated>
+    <updated>2017-11-01T13:52:36.000Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="ThreadLocal原理以及使用场景"><a href="#ThreadLocal原理以及使用场景" class="headerlink" title="ThreadLocal原理以及使用场景"></a>ThreadLocal原理以及使用场景</h2><h3 id="原理介绍"><a href="#原理介绍" class="headerlink" title="原理介绍"></a>原理介绍</h3><p> 每一个线程的Thread对象中都有一个ThreadLocalMap对象，这个对象存储了一组以Thread.threadLocalHashCode为键，<br>以本地线程变量为值的K-V值对，ThreadLocal对象就是当前线程的ThreadLocalMap的访问入口，每一个ThreadLocal对象都包含了<br>独一无二的threadLocalHashCode值，使用这个值就可以在线程K-V值对中找回对应的本地线程。</p><ol><li>Thread中ThreadLocalMap对象<br><pre><code>ThreadLocal.ThreadLocalMap inheritableThreadLocals = null;</code></pre></li><li><p>ThreadLocalMap设置K-V<br><br><pre><br><code><br>   int i = ThreadLocal.threadLocalHashCode &amp; (table.length - 1);<br>   table[i] = new Entry(ThreadLocal, value);<br></code><br></pre></p><ol><li>获取V<br><pre><br><code><br>int i = ThreadLocal.threadLocalHashCode &amp; (table.length - 1);//key<br>Object V = inheritableThreadLocals.table[i||i = nextIndex(i, len)].value;<br></code><br></pre><h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3></li></ol></li><li><p>Web容器默认采用单实例（Servlet）多线程的方式来处理Http请求。Servlet处理Http请求的方法中<br>如果对Servlet类中非线程安全的实例变量（例如：private int count）进行写操作，就会产生线程安全的问题，相对应的一种解决方式，就是在<br>Servlet类中定义一个ThreadLocal变量存储，就不会有线程安全的问题。</p></li><li>读写分离, DynamicDataSourceHolder存储方法上注解@DataSource属性value所对应的值，用于设置AbstractRoutingDataSource中方法determineCurrentLookupKey()返回值。</li></ol>]]></content>
+    <content type="html"><![CDATA[<h2 id="ThreadLocal原理以及使用场景"><a href="#ThreadLocal原理以及使用场景" class="headerlink" title="ThreadLocal原理以及使用场景"></a>ThreadLocal原理以及使用场景</h2><h3 id="原理介绍"><a href="#原理介绍" class="headerlink" title="原理介绍"></a>原理介绍</h3><p> 每一个线程的Thread对象中都有一个ThreadLocalMap对象，这个对象存储了一组以Thread.threadLocalHashCode为键，<br>以本地线程变量为值的K-V值对，ThreadLocal对象就是当前线程的ThreadLocalMap的访问入口，每一个ThreadLocal对象都包含了<br>独一无二的threadLocalHashCode值，使用这个值就可以在线程K-V值对中找回对应的本地线程。</p><ol><li>Thread中ThreadLocalMap对象<br><pre><code>ThreadLocal.ThreadLocalMap inheritableThreadLocals = null;</code></pre></li><li><p>ThreadLocalMap设置K-V<br><br><pre><br><code><br>   int K = ThreadLocal;<br>   int i = K.threadLocalHashCode &amp; (table.length - 1);<br>   Object V = new Entry(ThreadLocal, value);<br>   table[i] = V;<br></code><br></pre></p><ol><li>获取V<br><pre><br><code><br>int K = ThreadLocal;<br>int i = K.threadLocalHashCode &amp; (table.length - 1);<br>Object V = inheritableThreadLocals.table[i].value;<br></code><br></pre><h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3></li></ol></li><li><p>Web容器默认采用单实例（Servlet）多线程的方式来处理Http请求。Servlet处理Http请求的方法中<br>如果对Servlet类中非线程安全的实例变量（例如：private int count）进行写操作，就会产生线程安全的问题，相对应的一种解决方式，就是在<br>Servlet类中定义一个ThreadLocal变量存储，就不会有线程安全的问题。</p></li><li>读写分离, DynamicDataSourceHolder存储方法上注解@DataSource属性value所对应的值，用于设置AbstractRoutingDataSource中方法determineCurrentLookupKey()返回值。</li></ol>]]></content>
     
     <summary type="html">
     
@@ -36,6 +36,8 @@
     
       <category term="多线程" scheme="http://yoursite.com/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
+    
+      <category term="thread" scheme="http://yoursite.com/tags/thread/"/>
     
   </entry>
   
